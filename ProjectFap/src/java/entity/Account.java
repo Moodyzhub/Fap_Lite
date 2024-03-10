@@ -8,10 +8,10 @@ package entity;
  *
  * @author Fatvv
  */
-public class Account {
+public class Account implements IEntity {
     private String username;
     private String password;
-    private String displayname;
+
 
     public String getUsername() {
         return username;
@@ -29,13 +29,7 @@ public class Account {
         this.password = password;
     }
 
-    public String getDisplayname() {
-        return displayname;
-    }
 
-    public void setDisplayname(String displayname) {
-        this.displayname = displayname;
-    }
     
     
 }
