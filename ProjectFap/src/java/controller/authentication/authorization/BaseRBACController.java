@@ -5,6 +5,7 @@
 package controller.authentication.authorization;
 
 import controller.authentication.BaseRequiredAuthenticationController;
+import dal.RoleDBContext;
 import entity.Account;
 import entity.Role;
 import jakarta.servlet.ServletException;
@@ -24,7 +25,7 @@ public abstract class BaseRBACController extends BaseRequiredAuthenticationContr
         String url = req.getServletPath();
         //create new RoleDBContext to access DB
         RoleDBContext db= new RoleDBContext();
-        return db.getByUserAndUrl(account.getUsername(), url);
+        return db.getByUsernameAndUrl(account.getUsername(), url);
     
     }
     

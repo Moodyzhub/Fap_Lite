@@ -21,6 +21,7 @@ public class AccountDBContext extends DBContext<Account> {
         try {
             String sql = "SELECT username,password FROM Account\n"
                     + " WHERE username = ? AND password = ?";
+            //Create a PreparedStatement object to execute parameterized SQL queries
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2,password);
