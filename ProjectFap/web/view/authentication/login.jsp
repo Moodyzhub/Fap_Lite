@@ -9,9 +9,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Login Screen</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form action="" method="POST">
+            Username: <input type="text" name="username"/> <br/>
+            Password: <input type="password" name="password"/> <br/>
+            <input type="checkbox" name="remember" value="remember"/> Remember me in 7 days
+            <br/>
+            <input type="submit" value="Login"/>
+        </form>
     </body>
 </html>
