@@ -8,4 +8,7 @@
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+    <session-config>
+        <session-timeout>230</session-timeout>
+    </session-config>
 </web-app>

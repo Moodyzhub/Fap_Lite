@@ -5,36 +5,22 @@
 
 package controller.authentication;
 
+import dal.AccountDBContext;
+import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Fatvv
  */
 public class LoginController extends HttpServlet {
-   
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
 
     
     @Override
@@ -48,7 +34,36 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String username =request.getParameter("username");
+        String password =request.getParameter("password");
+        
+        AccountDBContext db = new AccountDBContext();
+        Account account =db.getByUsernamePassword(username, password);
+        
+        if(account != null)
+        {
+            String remember = request.getParameter("remember");
+            if(remember !=null){
+                Cookie c_user = new Cookie("username", username);
+                Cookie c_pass = new Cookie("password", password);
+                c_user.setMaxAge(3600*24*7);
+                c_pass.setMaxAge(3600*24*7);
+                
+                response.addCookie(c_pass);
+                response.addCookie(c_user);
+            
+            }
+            HttpSession session = request.getSession();
+            session.setAttribute("account", account);
+            response.getWriter().println("login successful!");
+            
+        
+        }
+        else
+        {
+            response.getWriter().println("login failed!");
+        }
+        
     }
 
     
