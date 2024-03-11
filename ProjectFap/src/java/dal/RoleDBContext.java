@@ -32,15 +32,24 @@ public class RoleDBContext extends DBContext<Role>{
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             stm.setString(2, url);
-            ResultSet rs = stm.execute();
-                 return null;
+            //execute stm and store rs in object ResultSet
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Role r= new Role();
+                r.setRole_id(rs.getInt("roleid"));
+                r.setRole_name(rs.getString("rolename"));
+                roles.add(r);
+                
+            
+            }
+                 
             
         } catch (SQLException ex) {
             Logger.getLogger(RoleDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         
        
-    
+        return null;
     }
 
     @Override
