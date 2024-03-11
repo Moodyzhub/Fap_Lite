@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author sonnt
  */
-public abstract class DBContext<T extends IEntity> {
+public abstract class DBContext<T> {
     protected Connection connection;
     public DBContext()
     {
