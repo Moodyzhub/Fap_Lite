@@ -29,13 +29,32 @@ public abstract class BaseRBACController extends BaseRequiredAuthenticationContr
     
     }
     
+    protected abstract void doPost(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles)
+            throws ServletException, IOException;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+        ArrayList<Role> roles = getRoles(req, account);
+        // check account have role or not with this url
+        if(roles.size() < 1){
+            resp.getWriter().println("access denied!");
+        
+        }else{
+            doPost(req, resp, account, roles);
+        }
     }
-
+    protected abstract void doGet(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles)
+            throws ServletException, IOException;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp, Account account) throws ServletException, IOException {
+         ArrayList<Role> roles = getRoles(req, account);
+        // if account have no role with this url
+        if(roles.size() < 1){
+            resp.getWriter().println("access denied!");
+        
+        }else{
+            doPost(req, resp, account, roles);
+        }
     }
     
 }
