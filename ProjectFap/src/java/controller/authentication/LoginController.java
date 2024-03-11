@@ -44,6 +44,7 @@ public class LoginController extends HttpServlet {
         {
             String remember = request.getParameter("remember");
             if(remember !=null){
+                //creat cookie of username and password and set name/value
                 Cookie c_user = new Cookie("username", username);
                 Cookie c_pass = new Cookie("password", password);
                 c_user.setMaxAge(3600*24*7);
