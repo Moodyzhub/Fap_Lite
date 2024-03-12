@@ -8,53 +8,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>TimeTable</title>
+    <title>Teacher Timetable</title>
 </head>
 <body>
-    <h1>TimeTable</h1>
-    
-    <%-- Dropdown menu cho năm --%>
-    <label for="year">Chọn năm:</label>
+    <h1>Teacher Timetable</h1>
+
+    <label for="year">Year:</label>
     <select id="year">
-        <% 
-            // Lặp qua 5 năm từ năm hiện tại trở lại 5 năm
-            int currentYear = java.time.Year.now().getValue();
-            for(int i = currentYear - 5; i <= currentYear + 5; i++) {
-        %>
-        <option value="<%= i %>"><%= i %></option>
-        <% } %>
+        <!-- Options will be populated by server-side code -->
     </select>
-    
-    <%-- Dropdown menu cho tuần --%>
-    <label for="week">Chọn tuần:</label>
+
+    <label for="week">Week:</label>
     <select id="week">
-        <% 
-            java.time.LocalDate currentDate = java.time.LocalDate.now();
-            java.time.temporal.WeekFields weekFields = java.time.temporal.WeekFields.ISO;
-            // Lặp qua 52 tuần trong năm
-            for(int i = 1; i <= 52; i++) {
-                java.time.LocalDate firstDayOfWeek = currentDate.with(weekFields.weekOfYear(), i).with(weekFields.dayOfWeek(), 1);
-                java.time.LocalDate lastDayOfWeek = firstDayOfWeek.plusDays(6);
-        %>
-        <option value="<%= firstDayOfWeek %> - <%= lastDayOfWeek %>">Tuần <%= i %>: <%= firstDayOfWeek %> - <%= lastDayOfWeek %></option>
-        <% } %>
+        <!-- Options will be populated by server-side code -->
     </select>
-    
-    <%-- Bảng hiển thị Thời gian --%>
-    <table border="1">
+
+    <table>
         <tr>
-            <th>Thứ</th>
-            <th>Ngày</th>
+            <th></th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
         </tr>
-        <% 
-            java.time.LocalDate startDate = java.time.LocalDate.now().with(weekFields.dayOfWeek(), 1);
-            for (int i = 0; i < 7; i++) {
-        %>
-        <tr>
-            <td><%= startDate.plusDays(i).getDayOfWeek().toString() %></td>
-            <td><%= startDate.plusDays(i) %></td>
-        </tr>
+        <% for (int i = 1; i <= 6; i++) { %>
+            <tr>
+                <td>Slot <%= i %></td>
+                <% for (int j = 1; j <= 7; j++) { %>
+                    <td>
+                        <!-- Lesson details will be populated by server-side code -->
+                        <button>Edit</button>
+                    </td>
+                <% } %>
+            </tr>
         <% } %>
     </table>
 </body>
