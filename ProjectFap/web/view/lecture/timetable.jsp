@@ -39,7 +39,27 @@
         </div>
 
         <table class="table table-bordered mt-4">
-            <!-- Table content -->
+            <tr>
+                <th></th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+            </tr>
+            <% for (int i = 1; i <= 6; i++) { %>
+                <tr>
+                    <td>Slot <%= i %></td>
+                    <% for (int j = 1; j <= 7; j++) { %>
+                        <td>
+                            <!-- Lesson details will be populated by server-side code -->
+                            <button class="btn btn-primary"><i class="fas fa-edit"></i> Edit</button>
+                        </td>
+                    <% } %>
+                </tr>
+            <% } %>
         </table>
     </div>
 </body>
