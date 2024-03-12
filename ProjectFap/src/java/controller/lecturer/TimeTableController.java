@@ -28,6 +28,7 @@ public class TimeTableController extends BaseRBACController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles) throws ServletException, IOException {
+        
     }
 
 }
