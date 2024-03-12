@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Fatvv
  */
 public class Lession {
-    private int id;
+     private int id;
     private Date date;
     private boolean attended;
     private Room room;
@@ -84,6 +84,5 @@ public class Lession {
     public void setAtts(ArrayList<Attendence> atts) {
         this.atts = atts;
     }
-    
     
 }

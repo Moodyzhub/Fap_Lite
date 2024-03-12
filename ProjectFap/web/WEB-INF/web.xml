@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>TimeTableController</servlet-name>
-        <servlet-class>TimeTableController</servlet-class>
+        <servlet-class>controller.lecturer.TimeTableController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -14,7 +14,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TimeTableController</servlet-name>
-        <url-pattern>/lecture/timetable</url-pattern>
+        <url-pattern>/lecturer/timetable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>230</session-timeout>
