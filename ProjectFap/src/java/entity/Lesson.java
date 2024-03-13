@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Fatvv
  */
-public class Lession {
+public class Lesson {
      private int id;
     private Date date;
     private boolean attended;
