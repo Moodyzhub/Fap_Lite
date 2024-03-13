@@ -51,5 +51,9 @@ public class CalenderCalculator {
         
         return weekList;
     }
+    public static LocalDate getMondayDate(LocalDate pointDate){
+        LocalDate mondayDate = pointDate.minusDays(pointDate.getDayOfWeek().getValue() - 1);
+        return mondayDate;
+    }
     
 }
