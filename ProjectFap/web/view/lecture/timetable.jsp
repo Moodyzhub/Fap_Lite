@@ -1,66 +1,86 @@
-<%-- 
-    Document   : timetable
-    Created on : Mar 11, 2024, 11:03:32 PM
-    Author     : Fatvv
---%>
+package controller.assignment.lecturer;
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Teacher Timetable</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    <style>
-        /* Add your custom CSS here */
-    </style>
-</head>
-<body>
-    <h1 class="text-center mb-4">Teacher Timetable</h1>
+import controller.authentication.BaseRequiredAuthenticationController;
+import controller.authentication.authorization.BaseRBACController;
+import dal.assignment.LessionDBContext;
+import dal.assignment.TimeSlotDBContext;
+import entity.Account;
+import entity.assignment.Lession;
+import entity.assignment.Role;
+import entity.assignment.TimeSlot;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import util.DateTimeHelper;
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="year">Year:</label>
-                <select id="year" class="form-control">
-                    <!-- Options will be populated by server-side code -->
-                </select>
-            </div>
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 
-            <div class="col-md-6">
-                <label for="week">Week:</label>
-                <select id="week" class="form-control">
-                    <!-- Options will be populated by server-side code -->
-                </select>
-            </div>
-        </div>
+public class TimeTableController extends BaseRBACController {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles) throws ServletException, IOException {
+        String raw_from = req.getParameter("from");
+        String raw_to = req.getParameter("to");
+        
+        String pageParam = req.getParameter("page");
+        int page;
+        if (pageParam == null || !pageParam.matches("\\d+")) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(pageParam);
+        }
+        
+        String raw_lid = req.getParameter("id");
+        int lid;
+        if (raw_lid == null || !raw_lid.matches("\\d+")) {
+            lid = 1; // or any default value
+        } else {
+            lid = Integer.parseInt(raw_lid);
+        }
+        
+        java.sql.Date from;
+        java.sql.Date to;
+        
+        Date today = new Date();
+        if(raw_from == null)
+        {
+            from = DateTimeHelper.convertUtilDateToSqlDate(DateTimeHelper.getWeekStart(today));
+        }
+        else
+        {
+            from = java.sql.Date.valueOf(raw_from);
+        }
+        
+        if(raw_to == null)
+        {
+            to = DateTimeHelper.convertUtilDateToSqlDate(DateTimeHelper.
+                    addDaysToDate(DateTimeHelper.getWeekStart(today),6));
+        }
+        else
+        {
+            to = java.sql.Date.valueOf(raw_to);
+        }
+        
+        ArrayList<java.sql.Date> dates = DateTimeHelper.getDatesBetween(from, to, page);
+        
+        TimeSlotDBContext slotDB = new TimeSlotDBContext();
+        ArrayList<TimeSlot> slots = slotDB.list();
+        
+        LessionDBContext lessDB = new LessionDBContext();
+        ArrayList<Lession> lessions = lessDB.getBy(lid, from, to);
+        
+        req.setAttribute("from", from);
+        req.setAttribute("to", to);
+        req.setAttribute("slots", slots);
+        req.setAttribute("dates", dates);
+        req.setAttribute("lessions", lessions);
+        req.setAttribute("page", page);
+        req.getRequestDispatcher("../view/lecturer/timetable.jsp").forward(req, resp);
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
-        <table class="table table-bordered mt-4">
-            <tr>
-                <th></th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-            </tr>
-            <% for (int i = 1; i <= 6; i++) { %>
-                <tr>
-                    <td>Slot <%= i %></td>
-                    <% for (int j = 1; j <= 7; j++) { %>
-                        <td>
-                            <!-- Lesson details will be populated by server-side code -->
-                            <button class="btn btn-primary"><i class="fas fa-edit"></i> Edit</button>
-                        </td>
-                    <% } %>
-                </tr>
-            <% } %>
-        </table>
-    </div>
-</body>
-</html>
+}
