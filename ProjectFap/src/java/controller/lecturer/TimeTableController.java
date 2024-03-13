@@ -31,7 +31,7 @@ public class TimeTableController extends BaseRBACController {
             page = Integer.parseInt(pageParam);
         }
         
-        String raw_lid = req.getParameter("lid");
+        String raw_lid = req.getParameter("id");
         int lid;
         if (raw_lid == null || !raw_lid.matches("\\d+")) {
             lid = 1; // or any default value
