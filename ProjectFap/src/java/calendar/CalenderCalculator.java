@@ -12,12 +12,28 @@ import entity.Week;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class CalenderCalculator {
     
+    public static LocalDate getMondayDate(LocalDate pointDate){
+        LocalDate mondayDate = pointDate.minusDays(pointDate.getDayOfWeek().getValue() - 1);
+        return mondayDate;
+    }
+    public static ArrayList<Date> getListDayOfWeek(LocalDate mondayDate){
+        ArrayList<Date> listDayOfWeek = new ArrayList<>();
+        
+        listDayOfWeek.add(Date.valueOf(mondayDate));
+        for (int i = 1; i < 7; i++) {
+            listDayOfWeek.add(Date.valueOf(mondayDate.plusDays(i)));
+        }
+        
+        return listDayOfWeek;
+    }
+    
     // create a list of weeks in a particular year
-    public static ArrayList<Week> getWeeks(int year) {
-        ArrayList<Week> weekList = new ArrayList<>();
+    public static ArrayList<Week> getListWeek(int year) {
+        ArrayList<Week>  listWeek = new ArrayList<>();
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM");
         
         LocalDate firstDayOfYear = LocalDate.of(year, 1, 1);
@@ -44,16 +60,16 @@ public class CalenderCalculator {
             week.setStartDay(monday);
             week.setFrom(fmt.format(monday));
             week.setTo(fmt.format(monday.plusDays(6)));
-            weekList.add(week);
+             listWeek.add(week);
             
             monday = monday.plusDays(7);
         }
         
-        return weekList;
+        return  listWeek;
     }
-    public static LocalDate getMondayDate(LocalDate pointDate){
-        LocalDate mondayDate = pointDate.minusDays(pointDate.getDayOfWeek().getValue() - 1);
-        return mondayDate;
-    }
+    
+    
+   
+    
     
 }
