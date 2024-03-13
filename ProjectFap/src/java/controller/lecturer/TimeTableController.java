@@ -19,10 +19,9 @@ import java.util.Date;
 
 public class TimeTableController extends BaseRBACController {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles) throws ServletException, IOException {
         String raw_from = req.getParameter("from");
         String raw_to = req.getParameter("to");
-        String raw_lid = req.getParameter("lid");
         
         String pageParam = req.getParameter("page");
         int page;
@@ -32,9 +31,16 @@ public class TimeTableController extends BaseRBACController {
             page = Integer.parseInt(pageParam);
         }
         
+        String raw_lid = req.getParameter("lid");
+        int lid;
+        if (raw_lid == null || !raw_lid.matches("\\d+")) {
+            lid = 1; // or any default value
+        } else {
+            lid = Integer.parseInt(raw_lid);
+        }
+        
         java.sql.Date from;
         java.sql.Date to;
-        int lid = Integer.parseInt(raw_lid);
         
         Date today = new Date();
         if(raw_from == null)
@@ -72,14 +78,9 @@ public class TimeTableController extends BaseRBACController {
         req.setAttribute("page", page);
         req.getRequestDispatcher("../view/lecturer/timetable.jsp").forward(req, resp);
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles) throws ServletException, IOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
