@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author Fatvv
  */
-class Attendence {
+public class Attendence {
     private int id;
     private Lesson lession;
     private Student student;

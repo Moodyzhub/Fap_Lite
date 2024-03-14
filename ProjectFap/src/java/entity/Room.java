@@ -8,7 +8,7 @@ package entity;
  *
  * @author Fatvv
  */
-class Room {
+public class Room {
     private int room_id;
     private String room_name;
 

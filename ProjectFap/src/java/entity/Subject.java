@@ -8,7 +8,7 @@ package entity;
  *
  * @author Fatvv
  */
-class Subject {
+public class Subject {
     private int sub_id;
     private String sub_name;
     private int credit;
