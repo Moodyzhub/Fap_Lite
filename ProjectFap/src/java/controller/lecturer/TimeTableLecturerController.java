@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.lecturer;
 
 import calendar.CalenderCalculator;
@@ -30,16 +29,18 @@ import java.util.ArrayList;
  * @author Fatvv
  */
 public class TimeTableLecturerController extends BaseRBACController {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String raw_year = req.getParameter("year");
         String raw_startDay = req.getParameter("startDay");
 
@@ -49,19 +50,21 @@ public class TimeTableLecturerController extends BaseRBACController {
         ArrayList<Date> daysOfWeek = new ArrayList<>();
         LessonDBContext lessonDB = new LessonDBContext();
         ArrayList<Lesson> LessonList = new ArrayList<>();
-        
-         if (raw_year == null && raw_startDay == null) {
+
+        if (raw_year == null && raw_startDay == null) {
             year = LocalDate.now().getYear();
             weeks = CalenderCalculator.getListWeek(year);
             startDay = CalenderCalculator.getMondayDate(LocalDate.now());
             daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
             Date from = Date.valueOf(startDay);
             Date to = Date.valueOf(startDay.plusDays(6));
-            LessonList = lessonDB.getTimeTableOfInstructor(getIdLecturerByAcc(account.getUsername()), from, to);
+            AccountDBContext accountDBContext = new AccountDBContext();
+            int lecid = accountDBContext.getIdLecturerByAcc(account.getUsername());
+            LessonList = lessonDB.getLecturerLesson(lecid, from, to);
+
         }
 
-
-    } 
+    }
 
     @Override
     public String getServletInfo() {
