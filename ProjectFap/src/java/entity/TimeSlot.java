@@ -10,7 +10,7 @@ package entity;
  */
 public class TimeSlot {
     private int time_id;
-    private int time_name;
+    private String time_name;
 
     public int getTime_id() {
         return time_id;
@@ -20,13 +20,13 @@ public class TimeSlot {
         this.time_id = time_id;
     }
 
-    public int getTime_name() {
+    public String getTime_name() {
         return time_name;
     }
 
-    public void setTime_name(int time_name) {
+    public void setTime_name(String time_name) {
         this.time_name = time_name;
     }
-    
+
     
 }
