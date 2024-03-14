@@ -13,8 +13,8 @@ import java.sql.*;
 import entity.StudentGroup;
 import entity.Subject;
 import entity.TimeSlot;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -76,7 +76,7 @@ public class LessonDBContext extends DBContext<Lesson>{
                 lessons.add(les);
             }
 
-        } catch (SQLException ex) {
+        }  catch (SQLException ex) {
             Logger.getLogger(LessonDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lessons;
