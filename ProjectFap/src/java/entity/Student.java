@@ -11,6 +11,15 @@ package entity;
 public class Student {
     private int std_id;
     private String std_name;
+    private Account account;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     public int getStd_id() {
         return std_id;
