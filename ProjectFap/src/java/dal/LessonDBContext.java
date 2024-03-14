@@ -49,7 +49,7 @@ public class LessonDBContext extends DBContext<Lesson> {
                 TimeSlot slot = new TimeSlot();
                 Room room = new Room();
                 Lecturer lec = new Lecturer();
-
+                //set each fields of each Object then save it to that Object
                 les.setId(rs.getInt("lesid"));
                 les.setAttended(rs.getBoolean("isAttended"));
                 les.setDate(rs.getDate("date"));
@@ -59,7 +59,7 @@ public class LessonDBContext extends DBContext<Lesson> {
                 sub.setSub_id(rs.getInt("subid"));
                 sub.setSub_name(rs.getString("subname"));
                 sg.setSubject(sub);
-
+                //then save that Object to Lesson as fields
                 les.setGroup(sg);
 
                 slot.setTime_id(rs.getInt("slotid"));
@@ -73,7 +73,7 @@ public class LessonDBContext extends DBContext<Lesson> {
                 lec.setLec_id(rs.getInt("lecid"));
                 lec.setLec_name(rs.getString("lecname"));
                 les.setLecturer(lec);
-
+                //add each object to be a list 
                 lessons.add(les);
             }
 
@@ -110,13 +110,14 @@ public class LessonDBContext extends DBContext<Lesson> {
             stm.setDate(3, to);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
+                //Object fields of Lesson.
                 Lesson les = new Lesson();
                 StudentGroup sg = new StudentGroup();
                 Subject sub = new Subject();
                 TimeSlot slot = new TimeSlot();
                 Room room = new Room();
                 Lecturer lec = new Lecturer();
-
+                //set each fields of each Object then save it to that Object
                 les.setId(rs.getInt("lesid"));
                 les.setAttended(rs.getBoolean("isAttended"));
                 les.setDate(rs.getDate("date"));
@@ -126,7 +127,7 @@ public class LessonDBContext extends DBContext<Lesson> {
                 sub.setSub_id(rs.getInt("subid"));
                 sub.setSub_name(rs.getString("subname"));
                 sg.setSubject(sub);
-
+                //then save that Object to Lesson as fields
                 les.setGroup(sg);
 
                 slot.setTime_id(rs.getInt("slotid"));
@@ -140,7 +141,7 @@ public class LessonDBContext extends DBContext<Lesson> {
                 lec.setLec_id(rs.getInt("lecid"));
                 lec.setLec_name(rs.getString("lecname"));
                 les.setLecturer(lec);
-
+                //add each object to be a list 
                 lessons.add(les);
             }
 
