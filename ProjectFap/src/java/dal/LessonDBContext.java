@@ -26,17 +26,20 @@ public class LessonDBContext extends DBContext<Lesson> {
         ArrayList<Lesson> lessons = new ArrayList<>();
         try {
             String sql = "SELECT  \n"
-                    + "	les.leid,les.isAttended,les.date,\n"
-                    + "	g.gid,g.gname,su.subid,su.suname,\n"
-                    + "	t.tid,t.tname,\n"
-                    + "	r.rid,r.rname,\n"
-                    + "	l.lid,l.lname\n"
-                    + "FROM Lesson les INNER JOIN StudentGroup g ON g.gid = les.gid\n"
-                    + "				 INNER JOIN [Subject] su ON su.subid = g.subid\n"
-                    + "				 INNER JOIN TimeSlot t ON t.tid = les.tid\n"
-                    + "				 INNER JOIN Room r ON r.rid = les.rid\n"
-                    + "				 INNER JOIN Lecturer l ON l.lid = les.lid\n"
-                    + "WHERE les.lid=? AND les.[date] >=? AND les.[date]<=?";
+                    + "	les.leid, les.isAttended, les.date,\n"
+                    + "	g.gid, g.gname, su.subid, su.subname,\n"
+                    + "	t.tid, t.tname,\n"
+                    + "	r.rid, r.rname,\n"
+                    + "	l.lecid, l.lecname\n"
+                    + "FROM \n"
+                    + "	Lesson les INNER JOIN StudentGroup g ON g.gid = les.gid\n"
+                    + "	INNER JOIN [Subject] su ON su.subid = g.subid\n"
+                    + "	INNER JOIN TimeSlot t ON t.tid = les.tid\n"
+                    + "	INNER JOIN Room r ON r.rid = les.rid\n"
+                    + "	INNER JOIN Lecturer l ON l.lecid = les.lecid\n"
+                    + "WHERE \n"
+                    + "	les.lecid=? AND les.[date] >=? AND les.[date]<=?";
+
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, lecid);
             stm.setDate(2, from);
@@ -50,20 +53,20 @@ public class LessonDBContext extends DBContext<Lesson> {
                 Room room = new Room();
                 Lecturer lec = new Lecturer();
                 //set each fields of each Object then save it to that Object
-                les.setId(rs.getInt("lesid"));
+                les.setId(rs.getInt("leid"));
                 les.setAttended(rs.getBoolean("isAttended"));
                 les.setDate(rs.getDate("date"));
 
-                sg.setStdg_id(rs.getInt("sgid"));
-                sg.setStdg_name(rs.getString("sgname"));
+                sg.setStdg_id(rs.getInt("gid"));
+                sg.setStdg_name(rs.getString("gname"));
                 sub.setSub_id(rs.getInt("subid"));
                 sub.setSub_name(rs.getString("subname"));
                 sg.setSubject(sub);
                 //then save that Object to Lesson as fields
                 les.setGroup(sg);
 
-                slot.setTime_id(rs.getInt("slotid"));
-                slot.setTime_name(rs.getString("slotname"));
+                slot.setTime_id(rs.getInt("tid"));
+                slot.setTime_name(rs.getString("tname"));
                 les.setSlot(slot);
 
                 room.setRoom_id(rs.getInt("rid"));
@@ -86,23 +89,24 @@ public class LessonDBContext extends DBContext<Lesson> {
     public ArrayList<Lesson> getStudentLesson(int stuid, Date from, Date to) {
         ArrayList<Lesson> lessons = new ArrayList<>();
         try {
-            String sql = "SELECT \n"
-                    + "les.leid, les.isAttended, les.date, \n"
-                    + "s.sid, s.sname, \n"
-                    + "g.gid, g.gname, su.subid, su.suname, \n"
-                    + "t.tid, t.tname, \n"
-                    + "r.rid, r.rname, \n"
-                    + "l.lid, l.lname \n"
+            String sql = "SELECT  \n"
+                    + "    les.leid, les.isAttended, les.date,\n"
+                    + "    s.sid, s.sname,\n"
+                    + "    g.gid, g.gname, su.subid, su.subname,\n"
+                    + "    t.tid, t.tname,\n"
+                    + "    r.rid, r.rname,\n"
+                    + "    l.lecid, l.lecname\n"
                     + "FROM \n"
-                    + "Lession les \n"
-                    + "INNER JOIN StudentGroup g ON g.gid = les.gid \n"
-                    + "INNER JOIN Subject su ON su.subid = g.subid \n"
-                    + "INNER JOIN TimeSlot t ON t.tid = les.tid \n"
-                    + "INNER JOIN Room r ON r.rid = les.rid \n"
-                    + "INNER JOIN Lecturer l ON l.lid = les.lid \n"
-                    + "INNER JOIN Enrollment e ON e.gid = g.gid \n"
-                    + "INNER JOIN Student s ON s.sid = e.sid \n"
-                    + "WHERE s.sid=? AND les.[date] >=? AND les.[date]<=?";
+                    + "    Lesson les \n"
+                    + "    INNER JOIN StudentGroup g ON g.gid = les.gid\n"
+                    + "    INNER JOIN Subject su ON su.subid = g.subid\n"
+                    + "    INNER JOIN TimeSlot t ON t.tid = les.tid\n"
+                    + "    INNER JOIN Room r ON r.rid = les.rid\n"
+                    + "    INNER JOIN Lecturer l ON l.lecid = les.lecid\n"
+                    + "    INNER JOIN Enrollment e ON e.gid = g.gid\n"
+                    + "    INNER JOIN Student s ON s.sid = e.sid\n"
+                    +"WHERE s.sid=? AND les.[date] >=? AND les.[date]<=?";
+            
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, stuid);
@@ -117,21 +121,20 @@ public class LessonDBContext extends DBContext<Lesson> {
                 TimeSlot slot = new TimeSlot();
                 Room room = new Room();
                 Lecturer lec = new Lecturer();
-                //set each fields of each Object then save it to that Object
-                les.setId(rs.getInt("lesid"));
+                les.setId(rs.getInt("leid"));
                 les.setAttended(rs.getBoolean("isAttended"));
                 les.setDate(rs.getDate("date"));
 
-                sg.setStdg_id(rs.getInt("sgid"));
-                sg.setStdg_name(rs.getString("sgname"));
+                sg.setStdg_id(rs.getInt("gid"));
+                sg.setStdg_name(rs.getString("gname"));
                 sub.setSub_id(rs.getInt("subid"));
                 sub.setSub_name(rs.getString("subname"));
                 sg.setSubject(sub);
                 //then save that Object to Lesson as fields
                 les.setGroup(sg);
 
-                slot.setTime_id(rs.getInt("slotid"));
-                slot.setTime_name(rs.getString("slotname"));
+                slot.setTime_id(rs.getInt("tid"));
+                slot.setTime_name(rs.getString("tname"));
                 les.setSlot(slot);
 
                 room.setRoom_id(rs.getInt("rid"));
