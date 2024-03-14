@@ -38,6 +38,31 @@
                     </td>
                 </c:forEach>
             </tr>
+            //show detail each slot of day
+            <c:forEach items = "${requestScope.slots}" var="slot">
+                <tr>
+                    <td>${slot.name}</td>
+                    <c:forEach items="${requestScope.daysOfWeek}" var="day">
+                        <td>
+                            <c:forEach items="${requestScope.lessonList}" var="les">
+                                <c:if test="${(les.date eq d) and (les.slot.id eq slot.id)}">
+                                    ${les.group.name} - ${les.group.subject.name}<br>
+                                    at ${les.room.name}
+                                    <a href="att?id=${les.id}"> 
+                                        <c:if test="${les.attended}">
+                                            Edit
+                                        </c:if>
+                                        <c:if test="${!les.attended}">
+                                            Take
+                                        </c:if>
+                                    </a>
+                                </c:if>
+                            </c:forEach>
+                        </td>
+                    </c:forEach>
+                </tr>
+            </c:forEach>
+            
             
         </table>
     </body>
