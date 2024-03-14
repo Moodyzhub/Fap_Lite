@@ -8,7 +8,7 @@ package entity;
  *
  * @author Fatvv
  */
-class StudentGroup {
+public class StudentGroup {
     private int stdg_id;
     private String stdg_name;
     private Subject subject;
