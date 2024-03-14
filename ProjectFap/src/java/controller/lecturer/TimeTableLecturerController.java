@@ -49,7 +49,7 @@ public class TimeTableLecturerController extends BaseRBACController {
         LocalDate startDay = null;
         ArrayList<Date> daysOfWeek = new ArrayList<>();
         LessonDBContext lessonDB = new LessonDBContext();
-        ArrayList<Lesson> LessonList = new ArrayList<>();
+        ArrayList<Lesson> lessonList = new ArrayList<>();
         AccountDBContext accountDB = new AccountDBContext();
         int lecid = accountDB.getIdLecturerByAcc(account.getUsername());
 
@@ -62,7 +62,7 @@ public class TimeTableLecturerController extends BaseRBACController {
             Date from = Date.valueOf(startDay);
             Date to = Date.valueOf(startDay.plusDays(6));
 
-            LessonList = lessonDB.getLecturerLesson(lecid, from, to);
+            lessonList = lessonDB.getLecturerLesson(lecid, from, to);
 
         }
         if (raw_year != null && raw_startDay == null) {
@@ -74,14 +74,14 @@ public class TimeTableLecturerController extends BaseRBACController {
                 Date from = Date.valueOf(startDay);
                 Date to = Date.valueOf(startDay.plusDays(6));
 
-                LessonList = lessonDB.getLecturerLesson(lecid, from, to);
+                lessonList = lessonDB.getLecturerLesson(lecid, from, to);
             } else {
                 startDay = CalenderCalculator.getMondayDate(LocalDate.now());
                 daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
                 Date from = Date.valueOf(startDay);
                 Date to = Date.valueOf(startDay.plusDays(6));
 
-                LessonList = lessonDB.getLecturerLesson(lecid, from, to);
+                lessonList = lessonDB.getLecturerLesson(lecid, from, to);
             }
         }
 
@@ -93,7 +93,7 @@ public class TimeTableLecturerController extends BaseRBACController {
             Date from = Date.valueOf(startDay);
             Date to = Date.valueOf(startDay.plusDays(6));
 
-            LessonList = lessonDB.getLecturerLesson(lecid, from, to);
+            lessonList = lessonDB.getLecturerLesson(lecid, from, to);
         }
         //get all slot
         TimeSlotDBContext slotDB = new TimeSlotDBContext();
@@ -103,7 +103,7 @@ public class TimeTableLecturerController extends BaseRBACController {
         req.setAttribute("startDay", startDay);
         req.setAttribute("weeks", weeks);
         req.setAttribute("daysOfWeek", daysOfWeek);
-        req.setAttribute("LessonList", LessonList);
+        req.setAttribute("lessonList", lessonList);
         req.setAttribute("slots", slots);
         req.getRequestDispatcher("../view/lecturer/timetable.jsp").forward(req, resp);
 
