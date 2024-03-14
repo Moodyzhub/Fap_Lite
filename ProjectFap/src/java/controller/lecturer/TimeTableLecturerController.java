@@ -5,11 +5,15 @@
 
 package controller.lecturer;
 
+import calendar.CalenderCalculator;
 import controller.authentication.authorization.BaseRBACController;
 import dal.LessonDBContext;
+import dal.AccountDBContext;
+import dal.TimeSlotDBContext;
 import entity.Account;
 import entity.Lesson;
 import entity.Role;
+import entity.TimeSlot;
 import entity.Week;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,9 +21,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -45,6 +49,17 @@ public class TimeTableLecturerController extends BaseRBACController {
         ArrayList<Date> daysOfWeek = new ArrayList<>();
         LessonDBContext lessonDB = new LessonDBContext();
         ArrayList<Lesson> LessonList = new ArrayList<>();
+        
+         if (raw_year == null && raw_startDay == null) {
+            year = LocalDate.now().getYear();
+            weeks = CalenderCalculator.getListWeek(year);
+            startDay = CalenderCalculator.getMondayDate(LocalDate.now());
+            daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
+            Date from = Date.valueOf(startDay);
+            Date to = Date.valueOf(startDay.plusDays(6));
+            LessonList = lessonDB.getTimeTableOfInstructor(getIdStudentByAcc(account.getUsername()), from, to);
+        }
+
 
     } 
 
