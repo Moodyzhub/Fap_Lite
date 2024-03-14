@@ -44,21 +44,42 @@ public class AccountDBContext extends DBContext<Account> {
             String sql = "SELECT s.sid \n"
                     + "FROM Student s\n"
                     + "JOIN Account a ON s.username = a.username\n"
+                    + "WHERE a.username = ?;";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+
+                return idByAcc = rs.getInt("sid");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 1;
+
+    }
+
+    public int getIdLecturerByAcc(String username) {
+        try {
+            int idByAcc;
+            String sql = "SELECT l.lecid "
+                    + "FROM Lecturer l "
+                    + "JOIN Account a ON l.username = a.username "
                     + "WHERE a.username = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                
-                return idByAcc=rs.getInt("sid");
+
+                return idByAcc = rs.getInt("lecid");
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return 0;
+        return 1;
 
-       
     }
 
     @Override
