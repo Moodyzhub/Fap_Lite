@@ -57,7 +57,7 @@ public class TimeTableLecturerController extends BaseRBACController {
             daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
             Date from = Date.valueOf(startDay);
             Date to = Date.valueOf(startDay.plusDays(6));
-            LessonList = lessonDB.getTimeTableOfInstructor(getIdStudentByAcc(account.getUsername()), from, to);
+            LessonList = lessonDB.getTimeTableOfInstructor(getIdLecturerByAcc(account.getUsername()), from, to);
         }
 
 
