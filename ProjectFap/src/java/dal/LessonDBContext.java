@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * @author Fatvv
  */
 public class LessonDBContext extends DBContext<Lesson>{
-    public ArrayList<Lesson> getLessonOfLecturer(int lid, Date from, Date to) {
+    public ArrayList<Lesson> getLecturerLesson(int lecid, Date from, Date to) {
         ArrayList<Lesson> lessons = new ArrayList<>();
         try {
             String sql = "SELECT  \n"
@@ -37,7 +37,7 @@ public class LessonDBContext extends DBContext<Lesson>{
                     + "				 INNER JOIN Lecturer l ON l.lid = les.lid\n"
                     + "WHERE les.lid=? AND les.[date] >=? AND les.[date]<=?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, lid);
+            stm.setInt(1, lecid);
             stm.setDate(2, from);
             stm.setDate(3, to);
             ResultSet rs = stm.executeQuery();
