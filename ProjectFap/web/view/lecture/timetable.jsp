@@ -14,7 +14,11 @@
             <tr>
                 <td rowspan="2">
                     <form id="yearForm" action="timetable" method="GET">
-                        
+                        <select name="year" onchange="document.getElementById('yearForm').submit()">
+                            <c:forEach begin="2022" end="2024" var="i">
+                                <option <c:if test="${requestScope.year == i}"> selected</c:if> value="${i}">${i}</option>    
+                            </c:forEach>
+                        </select> <br>
                     </form>
                     <form id="dayForm" action="timetable" method="GET">
                         
@@ -22,6 +26,7 @@
                     
                 </td>
                 <c:forEach items="${requestScope.daysOfWeek}" var="day">
+                    //format date to show name 7 day in week
                     <td>
                         <fmt:formatDate pattern="E" value="${day}"/>
                     </td>
