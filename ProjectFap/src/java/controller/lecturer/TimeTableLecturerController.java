@@ -50,7 +50,10 @@ public class TimeTableLecturerController extends BaseRBACController {
         ArrayList<Date> daysOfWeek = new ArrayList<>();
         LessonDBContext lessonDB = new LessonDBContext();
         ArrayList<Lesson> LessonList = new ArrayList<>();
+        AccountDBContext accountDB = new AccountDBContext();
+        int lecid = accountDB.getIdLecturerByAcc(account.getUsername());
 
+        //first time have no value of year and day
         if (raw_year == null && raw_startDay == null) {
             year = LocalDate.now().getYear();
             weeks = CalenderCalculator.getListWeek(year);
@@ -58,11 +61,52 @@ public class TimeTableLecturerController extends BaseRBACController {
             daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
             Date from = Date.valueOf(startDay);
             Date to = Date.valueOf(startDay.plusDays(6));
-            AccountDBContext accountDBContext = new AccountDBContext();
-            int lecid = accountDBContext.getIdLecturerByAcc(account.getUsername());
+
             LessonList = lessonDB.getLecturerLesson(lecid, from, to);
 
         }
+        if (raw_year != null && raw_startDay == null) {
+            year = Integer.valueOf(raw_year);
+            weeks = CalenderCalculator.getListWeek(year);
+            if (year != LocalDate.now().getYear()) {
+                startDay = CalenderCalculator.getMondayDate(weeks.get(0).getStartDay());
+                daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
+                Date from = Date.valueOf(startDay);
+                Date to = Date.valueOf(startDay.plusDays(6));
+
+                LessonList = lessonDB.getLecturerLesson(lecid, from, to);
+            } else {
+                startDay = CalenderCalculator.getMondayDate(LocalDate.now());
+                daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
+                Date from = Date.valueOf(startDay);
+                Date to = Date.valueOf(startDay.plusDays(6));
+
+                LessonList = lessonDB.getLecturerLesson(lecid, from, to);
+            }
+        }
+
+        if (raw_year == null && raw_startDay != null) {
+            startDay = LocalDate.parse(raw_startDay);
+            year = startDay.getYear();
+            weeks = CalenderCalculator.getListWeek(year);
+            daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
+            Date from = Date.valueOf(startDay);
+            Date to = Date.valueOf(startDay.plusDays(6));
+
+            LessonList = lessonDB.getLecturerLesson(lecid, from, to);
+        }
+        //get all slot
+        TimeSlotDBContext slotDB = new TimeSlotDBContext();
+        ArrayList<TimeSlot> slots = slotDB.list();
+
+        req.setAttribute("year", year);
+        req.setAttribute("startDay", startDay);
+        req.setAttribute("weeks", weeks);
+        req.setAttribute("daysOfWeek", daysOfWeek);
+        req.setAttribute("LessonList", LessonList);
+        req.setAttribute("slots", slots);
+        req.getRequestDispatcher("../view/lecturer/timetable.jsp").forward(req, resp);
+
 
     }
 
