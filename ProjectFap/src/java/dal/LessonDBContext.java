@@ -4,10 +4,17 @@
  */
 package dal;
 
+import dal.DBContext;
+import entity.Lecturer;
 import entity.Lesson;
+import entity.Room;
 import java.util.ArrayList;
-import java.util.Date;
 import java.sql.*;
+import entity.StudentGroup;
+import entity.Subject;
+import entity.TimeSlot;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 /**
  *
@@ -36,8 +43,8 @@ public class LessonDBContext extends DBContext<Lesson>{
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Lesson les = new Lesson();
-                StudentGroup g = new StudentGroup();
-                Subject su = new Subject();
+                StudentGroup sg = new StudentGroup();
+                Subject sub = new Subject();
                 TimeSlot slot = new TimeSlot();
                 Room room = new Room();
                 Lecturer lec = new Lecturer();
@@ -46,24 +53,24 @@ public class LessonDBContext extends DBContext<Lesson>{
                 les.setAttended(rs.getBoolean("isAttended"));
                 les.setDate(rs.getDate("date"));
 
-                g.setId(rs.getInt("gid"));
-                g.setName(rs.getString("gname"));
-                su.setId(rs.getInt("subid"));
-                su.setName(rs.getString("suname"));
-                g.setSubject(su);
+                sg.setStdg_id(rs.getInt("gid"));
+                sg.setStdg_name(rs.getString("gname"));
+                sub.setSub_id(rs.getInt("subid"));
+                sub.setSub_name(rs.getString("suname"));
+                sg.setSubject(sub);
 
-                les.setGroup(g);
+                les.setGroup(sg);
 
-                slot.setId(rs.getInt("tid"));
-                slot.setName(rs.getString("tname"));
+                slot.setTime_id(rs.getInt("tid"));
+                slot.setTime_name(rs.getString("tname"));
                 les.setSlot(slot);
 
-                room.setId(rs.getInt("rid"));
-                room.setName(rs.getString("rname"));
+                room.setRoom_id(rs.getInt("rid"));
+                room.setRoom_name(rs.getString("rname"));
                 les.setRoom(room);
 
-                lec.setId(rs.getInt("lid"));
-                lec.setName(rs.getString("lname"));
+                lec.setLec_id(rs.getInt("lid"));
+                lec.setLec_name(rs.getString("lname"));
                 les.setLecturer(lec);
 
                 lessons.add(les);
