@@ -5,11 +5,11 @@
 package dal;
 
 import entity.Account;
+import entity.Student;
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 /**
  *
@@ -24,10 +24,9 @@ public class AccountDBContext extends DBContext<Account> {
             //Create a PreparedStatement object to execute parameterized SQL queries
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);
-            stm.setString(2,password);
+            stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
-            if(rs.next())
-            {
+            if (rs.next()) {
                 Account account = new Account();
                 account.setUsername(username);
                 account.setPassword(password);
@@ -37,6 +36,29 @@ public class AccountDBContext extends DBContext<Account> {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public int getIdStudentByAcc(String username) {
+        try {
+            int idByAcc;
+            String sql = "SELECT s.sid \n"
+                    + "FROM Student s\n"
+                    + "JOIN Account a ON s.username = a.username\n"
+                    + "WHERE a.username = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                
+                return idByAcc=rs.getInt("sid");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
+       
     }
 
     @Override
