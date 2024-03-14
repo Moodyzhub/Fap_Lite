@@ -50,28 +50,28 @@ public class LessonDBContext extends DBContext<Lesson> {
                 Room room = new Room();
                 Lecturer lec = new Lecturer();
 
-                les.setId(rs.getInt("leid"));
+                les.setId(rs.getInt("lesid"));
                 les.setAttended(rs.getBoolean("isAttended"));
                 les.setDate(rs.getDate("date"));
 
-                sg.setStdg_id(rs.getInt("gid"));
-                sg.setStdg_name(rs.getString("gname"));
+                sg.setStdg_id(rs.getInt("sgid"));
+                sg.setStdg_name(rs.getString("sgname"));
                 sub.setSub_id(rs.getInt("subid"));
-                sub.setSub_name(rs.getString("suname"));
+                sub.setSub_name(rs.getString("subname"));
                 sg.setSubject(sub);
 
                 les.setGroup(sg);
 
-                slot.setTime_id(rs.getInt("tid"));
-                slot.setTime_name(rs.getString("tname"));
+                slot.setTime_id(rs.getInt("slotid"));
+                slot.setTime_name(rs.getString("slotname"));
                 les.setSlot(slot);
 
                 room.setRoom_id(rs.getInt("rid"));
                 room.setRoom_name(rs.getString("rname"));
                 les.setRoom(room);
 
-                lec.setLec_id(rs.getInt("lid"));
-                lec.setLec_name(rs.getString("lname"));
+                lec.setLec_id(rs.getInt("lecid"));
+                lec.setLec_name(rs.getString("lecname"));
                 les.setLecturer(lec);
 
                 lessons.add(les);
@@ -117,28 +117,28 @@ public class LessonDBContext extends DBContext<Lesson> {
                 Room room = new Room();
                 Lecturer lec = new Lecturer();
 
-                les.setId(rs.getInt("leid"));
+                les.setId(rs.getInt("lesid"));
                 les.setAttended(rs.getBoolean("isAttended"));
                 les.setDate(rs.getDate("date"));
 
-                sg.setStdg_id(rs.getInt("gid"));
-                sg.setStdg_name(rs.getString("gname"));
+                sg.setStdg_id(rs.getInt("sgid"));
+                sg.setStdg_name(rs.getString("sgname"));
                 sub.setSub_id(rs.getInt("subid"));
-                sub.setSub_name(rs.getString("suname"));
+                sub.setSub_name(rs.getString("subname"));
                 sg.setSubject(sub);
 
                 les.setGroup(sg);
 
-                slot.setTime_id(rs.getInt("tid"));
-                slot.setTime_name(rs.getString("tname"));
+                slot.setTime_id(rs.getInt("slotid"));
+                slot.setTime_name(rs.getString("slotname"));
                 les.setSlot(slot);
 
                 room.setRoom_id(rs.getInt("rid"));
                 room.setRoom_name(rs.getString("rname"));
                 les.setRoom(room);
 
-                lec.setLec_id(rs.getInt("lid"));
-                lec.setLec_name(rs.getString("lname"));
+                lec.setLec_id(rs.getInt("lecid"));
+                lec.setLec_name(rs.getString("lecname"));
                 les.setLecturer(lec);
 
                 lessons.add(les);
