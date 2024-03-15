@@ -9,9 +9,71 @@ package entity;
  * @author Fatvv
  */
 public class Lecturer {
-    private int lec_id;
-    private String lec_name;
+   private int id;
+    private String code;
+    private String name;
+    private Boolean gender;
+    private String phone;
+    private String email;
+    private String image;
     private Account account;
+    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Account getAccount() {
         return account;
@@ -21,21 +83,4 @@ public class Lecturer {
         this.account = account;
     }
 
-    public int getLec_id() {
-        return lec_id;
-    }
-
-    public void setLec_id(int lec_id) {
-        this.lec_id = lec_id;
-    }
-
-    public String getLec_name() {
-        return lec_name;
-    }
-
-    public void setLec_name(String lec_name) {
-        this.lec_name = lec_name;
-    }
-    
-    
 }
