@@ -39,8 +39,8 @@ public class TimeTableLecturerController extends BaseRBACController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles)
-            throws ServletException, IOException {
+//    protected void processRequest(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles)
+//            throws ServletException, IOException {
 //        String raw_year = req.getParameter("year");
 //        String raw_startDay = req.getParameter("startDay");
 //
@@ -107,8 +107,8 @@ public class TimeTableLecturerController extends BaseRBACController {
 //        req.setAttribute("slots", slots);
 //        req.getRequestDispatcher("../view/lecturer/timetable.jsp").forward(req, resp);
 //
-
-    }
+//
+//    }
 
     @Override
     public String getServletInfo() {
@@ -117,7 +117,74 @@ public class TimeTableLecturerController extends BaseRBACController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp, Account account, ArrayList<Role> roles) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       String raw_year = req.getParameter("year");
+        String raw_startDay = req.getParameter("startDay");
+
+        Integer year = null;
+        ArrayList<Week> weeks = new ArrayList<>();
+        LocalDate startDay = null;
+        ArrayList<Date> daysOfWeek = new ArrayList<>();
+        LessonDBContext lessonDB = new LessonDBContext();
+        ArrayList<Lesson> lessonList = new ArrayList<>();
+        AccountDBContext accountDB = new AccountDBContext();
+        int lecid = accountDB.getIdLecturerByAcc(account.getUsername());
+
+        //first time have no value of year and day
+        if (raw_year == null && raw_startDay == null) {
+            year = LocalDate.now().getYear();
+            weeks = CalenderCalculator.getListWeek(year);
+            startDay = CalenderCalculator.getMondayDate(LocalDate.now());
+            daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
+            Date from = Date.valueOf(startDay);
+            Date to = Date.valueOf(startDay.plusDays(6));
+
+            lessonList = lessonDB.getLecturerLesson(lecid, from, to);
+
+        }
+        if (raw_year != null && raw_startDay == null) {
+            year = Integer.valueOf(raw_year);
+            weeks = CalenderCalculator.getListWeek(year);
+            if (year != LocalDate.now().getYear()) {
+                startDay = CalenderCalculator.getMondayDate(weeks.get(0).getStartDay());
+                daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
+                Date from = Date.valueOf(startDay);
+                Date to = Date.valueOf(startDay.plusDays(6));
+
+                lessonList = lessonDB.getLecturerLesson(lecid, from, to);
+            } else {
+                startDay = CalenderCalculator.getMondayDate(LocalDate.now());
+                daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
+                Date from = Date.valueOf(startDay);
+                Date to = Date.valueOf(startDay.plusDays(6));
+
+                lessonList = lessonDB.getLecturerLesson(lecid, from, to);
+            }
+        }
+
+        if (raw_year == null && raw_startDay != null) {
+            startDay = LocalDate.parse(raw_startDay);
+            year = startDay.getYear();
+            weeks = CalenderCalculator.getListWeek(year);
+            daysOfWeek = CalenderCalculator.getListDayOfWeek(startDay);
+            Date from = Date.valueOf(startDay);
+            Date to = Date.valueOf(startDay.plusDays(6));
+
+            lessonList = lessonDB.getLecturerLesson(lecid, from, to);
+        }
+        //get all slot
+        TimeSlotDBContext slotDB = new TimeSlotDBContext();
+        ArrayList<TimeSlot> slots = slotDB.list();
+
+        req.setAttribute("year", year);
+        req.setAttribute("startDay", startDay);
+        req.setAttribute("weeks", weeks);
+        req.setAttribute("daysOfWeek", daysOfWeek);
+        req.setAttribute("lessonList", lessonList);
+        req.setAttribute("slots", slots);
+        req.getRequestDispatcher("../view/lecture/timetable.jsp").forward(req, resp);
+
+
     }
 
     @Override
