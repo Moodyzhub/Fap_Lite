@@ -31,7 +31,7 @@
                     </form>
                     
                 </td>
-                // show name 7 day in week
+                
                 <c:forEach items="${requestScope.daysOfWeek}" var="day">
                     <td>
                         <fmt:formatDate pattern="E" value="${day}"/>
