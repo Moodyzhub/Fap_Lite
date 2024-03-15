@@ -8,7 +8,7 @@ package entity;
  *
  * @author Fatvv
  */
-public class Account implements IEntity {
+public class Account  {
     private String username;
     private String password;
 
