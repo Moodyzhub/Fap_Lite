@@ -8,14 +8,11 @@ package entity;
  *
  * @author Fatvv
  */
-public class Room {
+public class Slot {
 
     private int id;
-    private int name;
-    private Building building;
-
-    public Room() {
-    }
+    private String start;
+    private String end;
 
     public int getId() {
         return id;
@@ -25,20 +22,20 @@ public class Room {
         this.id = id;
     }
 
-    public int getName() {
-        return name;
+    public String getStart() {
+        return start;
     }
 
-    public void setName(int name) {
-        this.name = name;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public Building getBuilding() {
-        return building;
+    public String getEnd() {
+        return end;
     }
 
-    public void setBuilding(Building building) {
-        this.building = building;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
 }

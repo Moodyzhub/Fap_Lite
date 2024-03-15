@@ -20,7 +20,7 @@ public abstract class DBContext {
 
     public DBContext() {
         try {
-            String url = "jdbc:sqlserver://DESKTOP-A5U0CBO:1433;databaseName=AssignmentSP2024;encrypt=true;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://DESKTOP-A5U0CBO:1433;databaseName=Fap_Ass;encrypt=true;trustServerCertificate=true";
             String user = "sa";
             String password = "sa170322";
 

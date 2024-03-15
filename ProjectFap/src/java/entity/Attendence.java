@@ -4,6 +4,7 @@
  */
 package entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -11,12 +12,12 @@ import java.util.Date;
  * @author Fatvv
  */
 public class Attendence {
-    private int id;
-    private Lesson lession;
+   private int id;
     private Student student;
-    private boolean present;
-    private String description;
-    private Date time;
+    private Lesson lesson;
+    private Boolean status;
+    private String note;
+    private Timestamp recordTime;
 
     public int getId() {
         return id;
@@ -24,14 +25,6 @@ public class Attendence {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Lesson getLession() {
-        return lession;
-    }
-
-    public void setLession(Lesson lession) {
-        this.lession = lession;
     }
 
     public Student getStudent() {
@@ -42,29 +35,37 @@ public class Attendence {
         this.student = student;
     }
 
-    public boolean isPresent() {
-        return present;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    public void setPresent(boolean present) {
-        this.present = present;
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 
-    public String getDescription() {
-        return description;
+    public Boolean getStatus() {
+        return status;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
-    public Date getTime() {
-        return time;
+    public String getNote() {
+        return note;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setNote(String note) {
+        this.note = note;
     }
-    
+
+    public Timestamp getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(Timestamp recordTime) {
+        this.recordTime = recordTime;
+    }
+
     
 }

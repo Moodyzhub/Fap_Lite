@@ -13,13 +13,12 @@ import java.util.ArrayList;
  */
 public class Lesson {
      private int id;
-    private Date date;
-    private boolean attended;
+    private Slot slot;
     private Room room;
-    private TimeSlot slot;
+    private Date date;
+    private Group group;
     private Lecturer lecturer;
-    private StudentGroup group;
-    private ArrayList<Attendence> atts = new ArrayList<>();
+    private Boolean isTaken;
 
     public int getId() {
         return id;
@@ -29,20 +28,12 @@ public class Lesson {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Slot getSlot() {
+        return slot;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public boolean isAttended() {
-        return attended;
-    }
-
-    public void setAttended(boolean attended) {
-        this.attended = attended;
+    public void setSlot(Slot slot) {
+        this.slot = slot;
     }
 
     public Room getRoom() {
@@ -53,12 +44,20 @@ public class Lesson {
         this.room = room;
     }
 
-    public TimeSlot getSlot() {
-        return slot;
+    public Date getDate() {
+        return date;
     }
 
-    public void setSlot(TimeSlot slot) {
-        this.slot = slot;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public Lecturer getLecturer() {
@@ -69,20 +68,13 @@ public class Lesson {
         this.lecturer = lecturer;
     }
 
-    public StudentGroup getGroup() {
-        return group;
+    public Boolean getIsTaken() {
+        return isTaken;
     }
 
-    public void setGroup(StudentGroup group) {
-        this.group = group;
+    public void setIsTaken(Boolean isTaken) {
+        this.isTaken = isTaken;
     }
 
-    public ArrayList<Attendence> getAtts() {
-        return atts;
-    }
-
-    public void setAtts(ArrayList<Attendence> atts) {
-        this.atts = atts;
-    }
     
 }
