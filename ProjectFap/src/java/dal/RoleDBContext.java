@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Fatvv
  */
-public class RoleDBContext extends DBContext<Role>{
+public class RoleDBContext extends DBContext{
     
     public ArrayList<Role> getByUsernameAndUrl(String username, String url){
         ArrayList<Role> roles = new ArrayList();
@@ -51,30 +51,5 @@ public class RoleDBContext extends DBContext<Role>{
        
         return null;
     }
-
-    @Override
-    public ArrayList<Role> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void insert(Role entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void update(Role entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(Role entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Role get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }
+    

@@ -3,36 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dal;
-import entity.IEntity;
-import java.sql.*;
-import java.util.ArrayList;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author sonnt
+ * @author Fatvv
  */
-public abstract class DBContext<T> {
+public abstract class DBContext {
+
     protected Connection connection;
-    public DBContext()
-    {
+
+    public DBContext() {
         try {
-            String user = "sa";
-            String pass = "sa170322";
             String url = "jdbc:sqlserver://DESKTOP-A5U0CBO:1433;databaseName=AssignmentSP2024;encrypt=true;trustServerCertificate=true";
+            String user = "sa";
+            String password = "sa170322";
+
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, user, pass);
+            connection = (Connection) DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public abstract ArrayList<T> list();
-    public abstract void insert(T entity);
-    public abstract void update(T entity);
-    public abstract void delete(T entity);
-    public abstract T get(int id);
+
 }

@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author Fatvv
  */
-public class LessonDBContext extends DBContext<Lesson> {
+public class LessonDBContext extends DBContext {
 
     public ArrayList<Lesson> getLecturerLesson(int lecid, Date from, Date to) {
         ArrayList<Lesson> lessons = new ArrayList<>();
@@ -154,29 +154,6 @@ public class LessonDBContext extends DBContext<Lesson> {
         return lessons;
     }
 
-    @Override
-    public ArrayList<Lesson> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void insert(Lesson entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void update(Lesson entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(Lesson entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Lesson get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }
