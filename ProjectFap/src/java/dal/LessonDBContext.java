@@ -25,20 +25,17 @@ public class LessonDBContext extends DBContext {
     public ArrayList<Lesson> getLecturerLesson(int lecid, Date from, Date to) {
         ArrayList<Lesson> lessons = new ArrayList<>();
         try {
-            String sql = "SELECT  \n"
-                    + "	les.leid, les.isAttended, les.date,\n"
-                    + "	g.gid, g.gname, su.subid, su.subname,\n"
-                    + "	t.tid, t.tname,\n"
-                    + "	r.rid, r.rname,\n"
-                    + "	l.lecid, l.lecname\n"
-                    + "FROM \n"
-                    + "	Lesson les INNER JOIN StudentGroup g ON g.gid = les.gid\n"
-                    + "	INNER JOIN [Subject] su ON su.subid = g.subid\n"
-                    + "	INNER JOIN TimeSlot t ON t.tid = les.tid\n"
-                    + "	INNER JOIN Room r ON r.rid = les.rid\n"
-                    + "	INNER JOIN Lecturer l ON l.lecid = les.lecid\n"
-                    + "WHERE \n"
-                    + "	les.lecid=? AND les.[date] >=? AND les.[date]<=?";
+            String sql = "SELECT l.id AS ID, slot.id AS Slot, slot.start AS Start, slot.end AS End, \n"
+                    + "       r.name AS Room, r.building_id AS Building, l.date AS Date, \n"
+                    + "       g.name AS Group, c.code AS Course, l.isTaken AS IsTaken\n"
+                    + "FROM Lesson l\n"
+                    + "INNER JOIN Slot slot ON l.slot_id = slot.id\n"
+                    + "INNER JOIN Room r ON l.room_id = r.id\n"
+                    + "INNER JOIN Building build ON r.building_id = build.id\n"
+                    + "INNER JOIN [Group] g ON l.group_id = g.id\n"
+                    + "INNER JOIN Course c ON g.course_id = c.id\n"
+                    + "INNER JOIN Lecturer Ins ON l.lecturer_id = Ins.id\n"
+                    + "WHERE Ins.id = ? AND l.date >= ? AND l.date <= ?;";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, lecid);
@@ -105,8 +102,7 @@ public class LessonDBContext extends DBContext {
                     + "    INNER JOIN Lecturer l ON l.lecid = les.lecid\n"
                     + "    INNER JOIN Enrollment e ON e.gid = g.gid\n"
                     + "    INNER JOIN Student s ON s.sid = e.sid\n"
-                    +"WHERE s.sid=? AND les.[date] >=? AND les.[date]<=?";
-            
+                    + "WHERE s.sid=? AND les.[date] >=? AND les.[date]<=?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, stuid);
@@ -153,7 +149,5 @@ public class LessonDBContext extends DBContext {
         }
         return lessons;
     }
-
-    
 
 }
