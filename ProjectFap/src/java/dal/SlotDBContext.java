@@ -4,7 +4,7 @@
  */
 package dal;
 
-import entity.TimeSlot;
+import entity.Slot;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,30 +16,25 @@ import java.util.logging.Logger;
  *
  * @author Fatvv
  */
-public class TimeSlotDBContext extends DBContext {
-
-    
-    public ArrayList<TimeSlot> list() {
-        
-        ArrayList<TimeSlot> slots = new ArrayList<>();
+public class SlotDBContext extends DBContext {
+    public ArrayList<Slot> getSlot() {
+        ArrayList<Slot> slots = new ArrayList<>();
         try {
-            
-            String sql = "SELECT tid,tname FROM TimeSlot";
+            String sql = "select id, [start], [end]\n"
+                    + "from Slot";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while(rs.next())
-            {
-                TimeSlot slot = new TimeSlot();
-                slot.setTime_id(rs.getInt("tid"));
-                slot.setTime_name(rs.getString("tname"));
+            while (rs.next()) {
+                Slot slot = new Slot();
+                slot.setId(rs.getInt("id"));
+                slot.setStart(rs.getString("start"));
+                slot.setEnd(rs.getString("end"));
+
                 slots.add(slot);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TimeSlotDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SlotDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return slots;
     }
-
-    
-    
 }
